@@ -24,4 +24,9 @@
     {
         protected override string FileName => "Settings\\enigma_library.json";
     }
+
+    public class GeneralSettingsManager : JsonSettingsProvider<GeneralSettings, GeneralSettingsManager>
+    {
+        protected override string FileName => "Settings\\general_settings.json";
+    }
 }

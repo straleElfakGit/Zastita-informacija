@@ -1,4 +1,5 @@
-﻿using PodesavanjaAlgoritama;
+﻿using Logger;
+using PodesavanjaAlgoritama;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -96,6 +97,8 @@ namespace Zastita_informacija_projekat
 
             TigerHashSettingsManager.Instance.Save(_tigerSettings);
             DesilaSePromena = false;
+            Logger.Logger.Instance.Log("Uspešno sačuvanja podešavanja za Tiger hash.", LogType.Info);
+
             MessageBox.Show("Podešavanja za TigerHash su sačuvana.","Sačuvane promene", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }

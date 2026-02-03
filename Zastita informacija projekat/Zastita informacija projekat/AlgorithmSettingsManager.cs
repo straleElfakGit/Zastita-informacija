@@ -14,6 +14,7 @@ namespace Zastita_informacija_projekat
         public CFBSettings CFB { get; private set; }
         public TigerHashSettings Tiger { get; private set; }
         public EnigmaLibrary Library { get; private set; }
+        public GeneralSettings General { get; private set; }
 
         public async Task LoadAllSettingsAsync()
         {
@@ -24,6 +25,7 @@ namespace Zastita_informacija_projekat
             CFB = await Task.Run(() => CFBSettingsManager.Instance.Load());
             Tiger = await Task.Run(() => TigerHashSettingsManager.Instance.Load());
             Library = await Task.Run(() => EnigmaLibraryManager.Instance.Load());
+            General = await Task.Run(() => GeneralSettingsManager.Instance.Load());
         }
     }
 }

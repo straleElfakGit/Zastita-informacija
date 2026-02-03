@@ -1,4 +1,5 @@
-﻿using PodesavanjaAlgoritama;
+﻿using Logger;
+using PodesavanjaAlgoritama;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -56,7 +57,7 @@ namespace Zastita_informacija_projekat
         private void TextBoxHex_TextChanged(object sender, EventArgs e)
         {
             TextBox txt = sender as TextBox;
-            bool isOk = txt.Text.Length == 8 && uint.TryParse(txt.Text, System.Globalization.NumberStyles.HexNumber, null, out _);
+            bool isOk = uint.TryParse(txt.Text, System.Globalization.NumberStyles.HexNumber, null, out _) && txt.Text.Length > 0;
             txt.BackColor = isOk ? Color.LightGreen : Color.MistyRose;
 
             _desilaSePromena = true;
@@ -90,7 +91,7 @@ namespace Zastita_informacija_projekat
         {
             foreach (var txt in new[] { txtKey1, txtKey2, txtKey3, txtKey4 })
             {
-                bool isOk = txt.Text.Length == 8 && uint.TryParse(txt.Text, System.Globalization.NumberStyles.HexNumber, null, out _);
+                bool isOk = uint.TryParse(txt.Text, System.Globalization.NumberStyles.HexNumber, null, out _) && txt.Text.Length > 0;
                 txt.BackColor = isOk ? Color.LightGreen : Color.MistyRose;
             }
         }
@@ -105,7 +106,21 @@ namespace Zastita_informacija_projekat
         public void SaveSettings()
         {
             try
-            {
+            {   
+                if(txtKey1.Text.Length == 0 || txtKey2.Text.Length == 0 || txtKey3.Text.Length == 0 || txtKey4.Text.Length == 0)
+                {
+                    MessageBox.Show("Morate popuniti sva polja za ključ",
+                                "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Logger.Logger.Instance.Log("Čuvanje podešavanja za XXTEA algoritam nije uspelo: Morate popuniti sva polja za ključ", LogType.Error);
+                    return;
+                }
+                if ((int)numWordsPerBlock.Value < 2)
+                {
+                    MessageBox.Show("Broj reči po bloku mora biti veći ili jednak 2.",
+                                "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Logger.Logger.Instance.Log("Čuvanje podešavanja za XXTEA algoritam nije uspelo: Broj reči po bloku mora biti veći ili jednak 2.", LogType.Error);
+                    return;
+                }
                 uint k1 = Convert.ToUInt32(txtKey1.Text, 16);
                 uint k2 = Convert.ToUInt32(txtKey2.Text, 16);
                 uint k3 = Convert.ToUInt32(txtKey3.Text, 16);
@@ -118,6 +133,7 @@ namespace Zastita_informacija_projekat
                 {
                     XXTEASettingsManager.Instance.Save(_xxteaSettings);
                     _desilaSePromena = false;
+                    Logger.Logger.Instance.Log("Uspešno su sačuvana nova podešvanja za XXTEA algoritam", LogType.Info);
                     MessageBox.Show("XXTEA podešavanja su uspešno sačuvana!", "Sačuvane promene", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
@@ -125,6 +141,7 @@ namespace Zastita_informacija_projekat
             {
                 MessageBox.Show("Neispravan format ključa! Unesite validne Hex vrednosti (8 karaktera).",
                                 "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Logger.Instance.Log("Čuvanje podešavanja za XXTEA algoritam nije uspelo: Neispravna vrednost ključa", LogType.Error);
             }
         }
 

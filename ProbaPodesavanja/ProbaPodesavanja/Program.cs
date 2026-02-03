@@ -12,7 +12,7 @@ namespace ProbaPodesavanja
     {
         static void Main(string[] args)
         {
-            /*try
+            try
             {
                 string path = Path.GetDirectoryName("Settings\\enigma_settings.json");
                 if (!Directory.Exists(path)) Directory.CreateDirectory(path);
@@ -40,7 +40,7 @@ namespace ProbaPodesavanja
             catch (Exception ex)
             {
                 Console.WriteLine($"Greška: {ex.Message}");
-            }*/
+            }
 
             /*try
             {
@@ -103,7 +103,7 @@ namespace ProbaPodesavanja
             for (int i = 0; i < ucitano.IV.Length; i++)
                 Console.WriteLine(ucitano.IV[i]);*/
 
-            var settings = TigerHashSettingsManager.Instance.Load();
+            /*var settings = TigerHashSettingsManager.Instance.Load();
 
             switch (settings.SelectedStrategy)
             {
@@ -117,7 +117,11 @@ namespace ProbaPodesavanja
 
                 default:
                     throw new Exception("Nepoznata strategija paddinga!");
-            }
+            }*/
+
+
+
+            Console.ReadKey();
         }
     }
 }

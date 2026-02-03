@@ -108,5 +108,13 @@ namespace Zastita_informacija_projekat
                 e.Cancel = true;
             }
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            if (!DozvoliPromenuKontrole())
+                return;
+            var uControl = new GereralSettingsControl(_settingsProvider.General);
+            ShowInPanel(uControl);
+        }
     }
 }

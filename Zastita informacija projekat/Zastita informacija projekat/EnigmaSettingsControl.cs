@@ -1,4 +1,5 @@
-﻿using PodesavanjaAlgoritama;
+﻿using Logger;
+using PodesavanjaAlgoritama;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -127,11 +128,13 @@ namespace Zastita_informacija_projekat
                 if (_enigmaSettings.ConsistantSettings())
                 {
                     _desilaSePromena = false;
+                    Logger.Logger.Instance.Log("Uspešno su sačuvana podešavanja za algoritam Enigma.", LogType.Info);
                     MessageBox.Show("Enigma uspešno sačuvana!");
                 }
                 else
                 {
                     MessageBox.Show("Podešavanja nisu validna! Proverite da li svi rotori imaju ispravnu dužinu ožičenja (" + _enigmaSettings.BlockSize + ").");
+                    Logger.Logger.Instance.Log("Podešavanja za enigmu nisu sačuvana: Nekonzistentna podešavanja.", LogType.Error);
                 }
             }
             catch (Exception ex)

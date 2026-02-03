@@ -1,4 +1,5 @@
-﻿using PodesavanjaAlgoritama;
+﻿using Logger;
+using PodesavanjaAlgoritama;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -72,6 +73,13 @@ namespace Zastita_informacija_projekat
             if (numSBits.Value % 8 != 0)
             {
                 MessageBox.Show("Parametar s mora biti deljiv sa 8!");
+                Logger.Logger.Instance.Log("Nisu sačuvana podešavanja za algoritam CFB: Parametar s mora biti deljiv sa 8.", LogType.Error);
+                return;
+            }
+            if (txtIV.Text.Length == 0)
+            {
+                MessageBox.Show("Duzina IV vektora mora da bude veca od 0.");
+                Logger.Logger.Instance.Log("Nisu sačuvana podešavanja za algoritam CFB: Duzina IV vektora mora da bude veca od 0.", LogType.Error);
                 return;
             }
 
@@ -83,10 +91,12 @@ namespace Zastita_informacija_projekat
                 CFBSettingsManager.Instance.Save(_cfbSettings);
                 _desilaSePromena = false;
                 MessageBox.Show("CFB podešavanja su uspešno sačuvana!");
+                Logger.Logger.Instance.Log("Uspešno su sačuvana podešavanja za algoritam CFB.", LogType.Info);
             }
             catch
             {
                 MessageBox.Show("IV mora biti validan Hex string parne dužine!");
+                Logger.Logger.Instance.Log("Nisu sačuvana podešavanja za algoritam CFB: IV mora da bude valdan Hex string parne dužine.", LogType.Error);
             }
         }
 
