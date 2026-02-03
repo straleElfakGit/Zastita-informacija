@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36401.2
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zastita informacija projekat", "Zastita informacija projekat\Zastita informacija projekat.csproj", "{239D066B-2F0B-4492-910D-DA75B3EBDE13}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PodesavanjaAlgoritama", "..\PodesavanjaAlgoritama\PodesavanjaAlgoritama\PodesavanjaAlgoritama.csproj", "{17D0528A-9792-4083-BDC5-519BB1518612}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{239D066B-2F0B-4492-910D-DA75B3EBDE13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{239D066B-2F0B-4492-910D-DA75B3EBDE13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{239D066B-2F0B-4492-910D-DA75B3EBDE13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{239D066B-2F0B-4492-910D-DA75B3EBDE13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17D0528A-9792-4083-BDC5-519BB1518612}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17D0528A-9792-4083-BDC5-519BB1518612}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17D0528A-9792-4083-BDC5-519BB1518612}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17D0528A-9792-4083-BDC5-519BB1518612}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {12CB3719-0D0F-4399-B7EF-A4A1F8EB0E72}
+	EndGlobalSection
+EndGlobal
