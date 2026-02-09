@@ -33,8 +33,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,6 +47,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlgorithmSettingsManager.cs" />
@@ -65,6 +69,18 @@
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FSWFactory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FSWFactory.Designer.cs">
+      <DependentUpon>FSWFactory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FSWUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FSWUserControl.Designer.cs">
+      <DependentUpon>FSWUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GereralSettingsControl.cs">
       <SubType>UserControl</SubType>
@@ -94,6 +110,9 @@
       <DependentUpon>TigerSettingsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="UIHelper.cs" />
+    <Compile Include="UserControl1.xaml.cs">
+      <DependentUpon>UserControl1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="XXTEASettingsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -108,6 +127,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FSWFactory.resx">
+      <DependentUpon>FSWFactory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FSWUserControl.resx">
+      <DependentUpon>FSWUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GereralSettingsControl.resx">
       <DependentUpon>GereralSettingsControl.cs</DependentUpon>
@@ -147,6 +172,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\CrytoWatcher\CrytoWatcher\CrytoWatcher.csproj">
+      <Project>{5c2bd0ad-2de4-4180-a53b-99a7c9216ce9}</Project>
+      <Name>CrytoWatcher</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Logger\Logger\Logger.csproj">
       <Project>{73910673-19b1-4ab0-8964-78cd95d7c8c0}</Project>
       <Name>Logger</Name>
@@ -155,6 +184,12 @@
       <Project>{17d0528a-9792-4083-bdc5-519bb1518612}</Project>
       <Name>PodesavanjaAlgoritama</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="UserControl1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

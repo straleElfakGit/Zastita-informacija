@@ -29,6 +29,7 @@ namespace Zastita_informacija_projekat
             numTotalRotors.Maximum = 8;
 
             UcitajKontrole();
+            PopuniBibliotekuReflektora();
 
             numTotalRotors.ValueChanged += numTotalRotors_ValueChanged;
             numCurrentIndex.ValueChanged += numCurrentIndex_ValueChanged;
@@ -39,10 +40,25 @@ namespace Zastita_informacija_projekat
         private void EnigmaSettingsControl_Load(object sender, EventArgs e)
         {
         }
+
+        private void PopuniBibliotekuReflektora()
+        {
+            cbReflectorLibrary.Items.Clear();
+            cbReflectorLibrary.Items.Add("Custom / Ručni unos");
+            foreach (var r in _enigmaLibrary.Reflectors)
+            {
+                cbReflectorLibrary.Items.Add(r);
+            }
+            cbReflectorLibrary.DisplayMember = "Name";
+            cbReflectorLibrary.SelectedIndex = 0;
+            cbReflectorLibrary.DropDownStyle = ComboBoxStyle.DropDown;
+        }
+
         private void UcitajKontrole()
         {
             int count = _enigmaSettings.RotorCount > 0 ? _enigmaSettings.RotorCount : 3;
             numTotalRotors.Value = count;
+            numBlockSize.Value = _enigmaSettings.BlockSize;
 
             AzurirajListuRotora(count);
 
@@ -73,7 +89,7 @@ namespace Zastita_informacija_projekat
             while (_rotorsInMemory.Count < noviBroj)
             {
                 int index = _rotorsInMemory.Count;
-                var novaKontrola = new SingleRotorControl(_enigmaLibrary, index, _enigmaSettings.BlockSize);
+                var novaKontrola = new SingleRotorControl(_enigmaLibrary, index, (int)numBlockSize.Value);
                 novaKontrola.PodaciIzmenjeni += (s, e) => _desilaSePromena = true;
                 _rotorsInMemory.Add(novaKontrola);
             }
@@ -128,6 +144,7 @@ namespace Zastita_informacija_projekat
                 if (_enigmaSettings.ConsistantSettings())
                 {
                     _desilaSePromena = false;
+                    EnigmaSettingsManager.Instance.Save(_enigmaSettings);
                     Logger.Logger.Instance.Log("Uspešno su sačuvana podešavanja za algoritam Enigma.", LogType.Info);
                     MessageBox.Show("Enigma uspešno sačuvana!");
                 }
@@ -150,7 +167,16 @@ namespace Zastita_informacija_projekat
 
         private void txtReflector_TextChanged(object sender, EventArgs e)
         {
+            ValidirajReflektor();
+            _desilaSePromena = true;
 
+            if (cbReflectorLibrary.SelectedIndex != -1)
+            {
+                cbReflectorLibrary.SelectedIndexChanged -= cbReflectorLibrary_SelectedIndexChanged;
+                cbReflectorLibrary.SelectedIndex = -1;
+                cbReflectorLibrary.Text = "Novi Reflektor";
+                cbReflectorLibrary.SelectedIndexChanged += cbReflectorLibrary_SelectedIndexChanged;
+            }
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -176,6 +202,117 @@ namespace Zastita_informacija_projekat
         {
             int index = (int)numCurrentIndex.Value - 1;
             PrikaziRotor(index);
+        }
+
+        private void cbReflectorLibrary_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbReflectorLibrary.SelectedItem is StandardReflector r)
+            {
+                txtReflector.Text = EnigmaUtils.IntArrayToString(r.Wiring);
+                _desilaSePromena = true;
+            }
+        }
+
+        private bool ValidnaInvolucija(int[] wiring, out string greska)
+        {
+            greska = "";
+            if (wiring == null || wiring.Length == 0) 
+                return false;
+
+            for (int i = 0; i < wiring.Length; i++)
+            {
+                if (wiring[i] == i)
+                {
+                    greska = $"Slovo na poziciji {i} se preslikava u sebe, što nije dozvoljeno za reflektor.";
+                    return false;
+                }
+                int partner = wiring[i];
+                if (partner < 0 || partner >= wiring.Length || wiring[partner] != i)
+                {
+                    greska = $"Nevalidan par: {i} ide u {partner}, ali {partner} ne ide nazad u {i}.";
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private void ValidirajReflektor()
+        {
+            int[] w = EnigmaUtils.StringToIntArray(txtReflector.Text);
+            bool duzinaOk = w.Length == (int)numBlockSize.Value;
+            string greska;
+            bool involucijaOk = ValidnaInvolucija(w, out greska);
+
+            if (!duzinaOk) 
+                txtReflector.BackColor = Color.MistyRose;
+            else if (!involucijaOk) 
+                txtReflector.BackColor = Color.Orange;
+            else 
+                txtReflector.BackColor = Color.White;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int[] w = EnigmaUtils.StringToIntArray(txtReflector.Text);
+            string greska;
+
+            if (!ValidnaInvolucija(w, out greska))
+            {
+                MessageBox.Show(greska, "Nevalidan reflektor", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Logger.Instance.Log("Nije uspelo cuvanje reflektora u biblioteku: Nevalidan unos za reflektor.", LogType.Error);
+                return;
+            }
+
+            string ime = cbReflectorLibrary.Text;
+            if (string.IsNullOrWhiteSpace(ime) || ime == "Custom / Ručni unos")
+            {
+                MessageBox.Show("Unesite naziv reflektora.");
+                return;
+            }
+            _enigmaLibrary.Reflectors.RemoveAll(r => r.Name.Equals(ime, StringComparison.OrdinalIgnoreCase));
+
+            _enigmaLibrary.Reflectors.Add(new StandardReflector
+            {
+                Name = ime,
+                Wiring = w
+            });
+
+            EnigmaLibraryManager.Instance.Save(_enigmaLibrary);
+            PopuniBibliotekuReflektora();
+            Logger.Logger.Instance.Log("Uspešno sačuvan reflektor u biblioteku.", LogType.Info);
+            MessageBox.Show("Reflektor sačuvan!");
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var rezultat = MessageBox.Show("Da li ste sigurni da želite da poništite sve izmene?",
+                                 "Potvrda reseta", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (rezultat == DialogResult.Yes)
+            {
+                UcitajKontrole();
+                Logger.Logger.Instance.Log("Podešavanja Enigme su resetovana na poslednje sačuvane vrednosti.", LogType.Info);
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            _enigmaSettings.BlockSize = (int)numBlockSize.Value;
+            SaveSettings();
+        }
+
+        private void numBlockSize_ValueChanged(object sender, EventArgs e)
+        {
+            int novaVelicina = (int)numBlockSize.Value;
+            //_enigmaSettings.BlockSize = novaVelicina;
+
+            foreach (var rotorCtrl in _rotorsInMemory)
+            {
+                rotorCtrl.UpdateBlockSize(novaVelicina);
+            }
+
+            ValidirajReflektor();
+            _desilaSePromena = true;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace PodesavanjaAlgoritama
 
         public override bool ConsistantSettings()
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 

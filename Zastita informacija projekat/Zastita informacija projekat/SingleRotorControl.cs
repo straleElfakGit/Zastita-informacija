@@ -78,16 +78,27 @@ namespace Zastita_informacija_projekat
 
         private void GenericChanged(object sender, EventArgs e)
         {
-            if (sender == txtWiring) 
+            if (sender == txtWiring)
                 ValidirajDuzinu();
-            if (cbLibrary.SelectedIndex != 0 && sender == txtWiring) 
-                cbLibrary.SelectedIndex = 0;
+
+            if (cbLibrary.SelectedIndex != -1)
+            {
+                
+                cbLibrary.SelectedIndexChanged -= cbLibrary_SelectedIndexChanged;
+
+                cbLibrary.SelectedIndex = -1;
+                cbLibrary.Text = "Novi Rotor ";
+
+                cbLibrary.SelectedIndexChanged += cbLibrary_SelectedIndexChanged;
+            }
+
             PodaciIzmenjeni?.Invoke(this, EventArgs.Empty);
         }
 
         private void SingleRotorControl_Load(object sender, EventArgs e)
         {
-
+            cbLibrary.DropDownStyle = ComboBoxStyle.DropDown;
+            UIHelper.CenterInParent(label7);
         }
 
         private void cbLibrary_SelectedIndexChanged(object sender, EventArgs e)
@@ -105,12 +116,98 @@ namespace Zastita_informacija_projekat
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string porukaGreske;
+            if ((porukaGreske = ProveriSveParametre(out string greska)) != null) 
+            {
+                MessageBox.Show(greska, "Nevalidan rotor: " + porukaGreske, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Logger.Instance.Log("Nije uspelo dodavanje novog rotora: " + porukaGreske, Logger.LogType.Error);
+                return;
+            }
 
+            string imeRotora = cbLibrary.Text;
+
+            if (_library.Rotors.Any(r => r.Name.Equals(imeRotora, StringComparison.OrdinalIgnoreCase)))
+            {
+                if (MessageBox.Show("Rotor sa tim imenom već postoji. Zameniti?", "Potvrda",
+                    MessageBoxButtons.YesNo) == DialogResult.No) 
+                    return;
+
+                _library.Rotors.RemoveAll(r => r.Name.Equals(imeRotora, StringComparison.OrdinalIgnoreCase));
+            }
+
+            _library.Rotors.Add(new StandardRotor
+            {
+                Name = imeRotora,
+                Wiring = this.Wiring,
+                Notch = this.Notch
+            });
+
+            EnigmaLibraryManager.Instance.Save(_library);
+            PopuniBiblioteku();
+            Logger.Logger.Instance.Log("Uspesno je dodat nevi rotor u biblioteku.", Logger.LogType.Info);
+            MessageBox.Show("Rotor je uspešno validiran i sačuvan!");
         }
+
+        private bool ValidnaPermutacija(int[] wiring)
+        {
+            if (wiring == null || wiring.Length == 0) 
+                return false;
+            var uniqueElements = new HashSet<int>(wiring);
+            return uniqueElements.Count == wiring.Length &&
+                   wiring.All(x => x >= 0 && x < wiring.Length);
+        }
+
+        private string ProveriSveParametre(out string porukaGreske)
+        {
+            porukaGreske = "";
+            int[] w = this.Wiring;
+            int n = w.Length;
+
+            if (!ValidnaPermutacija(w))
+            {
+                porukaGreske = "Ožičenje (Wiring) mora biti validna permutacija (svako slovo se pojavljuje tačno jednom).";
+                return porukaGreske;
+            }
+
+            if (Notch < 0 || Notch >= n)
+            {
+                porukaGreske = $"Notch mora biti u opsegu od 0 do {n - 1}.";
+                return porukaGreske;
+            }
+
+            return null;
+        }
+
         private void ValidirajDuzinu()
         {
-            bool isOk = txtWiring.Text.Length == _blockSize;
-            txtWiring.BackColor = isOk ? Color.White : Color.MistyRose;
+            int[] w = this.Wiring;
+            bool duzinaOk = w.Length == _blockSize;
+            bool permutacijaOk = ValidnaPermutacija(w);
+
+            if (!duzinaOk)
+                txtWiring.BackColor = Color.MistyRose;
+            else if (!permutacijaOk)
+                txtWiring.BackColor = Color.Orange; 
+            else
+                txtWiring.BackColor = Color.White;
+
+            /*if (w.Length > 0)
+            {
+                numNotch.Maximum = w.Length - 1;
+                numRing.Maximum = w.Length - 1;
+                numKey.Maximum = w.Length - 1;
+            }*/
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        public void UpdateBlockSize(int newSize)
+        {
+            _blockSize = newSize;
+            ValidirajDuzinu();
         }
     }
 }

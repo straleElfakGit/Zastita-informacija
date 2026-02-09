@@ -40,6 +40,9 @@ namespace Zastita_informacija_projekat
             UIHelper.CenterInParent(radioButton2);
             UIHelper.CenterInParent(radioButton3);
             UIHelper.CenterInParent(radioButton4);
+
+            numericUpDown1.Maximum = 10;
+            numericUpDown1.Minimum = 0;
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
@@ -67,6 +70,7 @@ namespace Zastita_informacija_projekat
             radioButton2.CheckedChanged -= RadioButton_CheckedChanged;
             radioButton3.CheckedChanged -= RadioButton_CheckedChanged;
             radioButton4.CheckedChanged -= RadioButton_CheckedChanged;
+            numericUpDown1.ValueChanged -= numericUpDown1_ValueChanged;
 
             switch (_generalSettings.LoggingFilesFrequence)
             {
@@ -76,8 +80,11 @@ namespace Zastita_informacija_projekat
                 case LoggingFiles.OnlyOneFile: radioButton4.Checked = true; break;
             }
 
+            numericUpDown1.Value = _generalSettings.MaximumFSW;
+
             DesilaSePromena = false;
 
+            numericUpDown1.ValueChanged += numericUpDown1_ValueChanged;
             radioButton1.CheckedChanged += RadioButton_CheckedChanged;
             radioButton2.CheckedChanged += RadioButton_CheckedChanged;
             radioButton3.CheckedChanged += RadioButton_CheckedChanged;
@@ -122,11 +129,18 @@ namespace Zastita_informacija_projekat
                 Logger.Logger.Instance.SetStrategy(new GeneralLogStrategy());
             }
 
+            _generalSettings.MaximumFSW = (int)numericUpDown1.Value;
+
             Logger.Logger.Instance.Log("Način logovanja aktivnosti je uspešno promenjen.", LogType.Info);
 
             GeneralSettingsManager.Instance.Save(_generalSettings);
             DesilaSePromena = false;
             MessageBox.Show("Podešavanja za učestanost kreiranja fajlova su sačuvana.", "Sačuvane promene", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

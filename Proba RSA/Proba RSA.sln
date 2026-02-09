@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36401.2 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proba RSA", "Proba RSA\Proba RSA.csproj", "{2EEA0642-8BD4-481F-BCE1-91A9F22D964C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSA", "..\RSA\RSA\RSA.csproj", "{C10147B8-3A6B-4089-B0AC-4DB758F9DDDE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2EEA0642-8BD4-481F-BCE1-91A9F22D964C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EEA0642-8BD4-481F-BCE1-91A9F22D964C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EEA0642-8BD4-481F-BCE1-91A9F22D964C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EEA0642-8BD4-481F-BCE1-91A9F22D964C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C10147B8-3A6B-4089-B0AC-4DB758F9DDDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C10147B8-3A6B-4089-B0AC-4DB758F9DDDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C10147B8-3A6B-4089-B0AC-4DB758F9DDDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C10147B8-3A6B-4089-B0AC-4DB758F9DDDE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {419B6314-BEE7-4BAA-B25E-3BF8E6A3819F}
+	EndGlobalSection
+EndGlobal

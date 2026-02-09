@@ -18,9 +18,11 @@ namespace PodesavanjaAlgoritama
     public class GeneralSettings : AlgorithmSettings
     {
         [JsonPropertyName("logging_files_frequence")]
-        public LoggingFiles LoggingFilesFrequence{ get; set; } = LoggingFiles.Daily;
+        public LoggingFiles LoggingFilesFrequence { get; set; } = LoggingFiles.Daily;
+        [JsonPropertyName("max_fsw")]
+        public int MaximumFSW { get; set; } = 3;
 
-        public GeneralSettings() 
+        public GeneralSettings()
         {
             LoggingFilesFrequence = LoggingFiles.Daily;
         }
@@ -30,6 +32,8 @@ namespace PodesavanjaAlgoritama
             if (!Enum.IsDefined(typeof(LoggingFiles), LoggingFilesFrequence))
                 return false;
 
+            if (MaximumFSW <= 0 || MaximumFSW > 10)
+                return false;
             return true;
         }
     }
