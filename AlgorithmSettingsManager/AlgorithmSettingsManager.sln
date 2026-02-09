@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgorithmSettingsManager", "AlgorithmSettingsManager\AlgorithmSettingsManager.csproj", "{CF308342-63E8-41D5-AF1A-B0A6B4087D63}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PodesavanjaAlgoritama", "..\PodesavanjaAlgoritama\PodesavanjaAlgoritama\PodesavanjaAlgoritama.csproj", "{17D0528A-9792-4083-BDC5-519BB1518612}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CF308342-63E8-41D5-AF1A-B0A6B4087D63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF308342-63E8-41D5-AF1A-B0A6B4087D63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF308342-63E8-41D5-AF1A-B0A6B4087D63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF308342-63E8-41D5-AF1A-B0A6B4087D63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17D0528A-9792-4083-BDC5-519BB1518612}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17D0528A-9792-4083-BDC5-519BB1518612}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17D0528A-9792-4083-BDC5-519BB1518612}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17D0528A-9792-4083-BDC5-519BB1518612}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {32A3E18A-D545-42F7-91D7-C8FF97478E5A}
+	EndGlobalSection
+EndGlobal

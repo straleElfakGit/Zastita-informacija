@@ -50,7 +50,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlgorithmSettingsManager.cs" />
     <Compile Include="CFBSettingsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -172,6 +171,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\AlgorithmSettingsManager\AlgorithmSettingsManager\AlgorithmSettingsManager.csproj">
+      <Project>{cf308342-63e8-41d5-af1a-b0a6b4087d63}</Project>
+      <Name>AlgorithmSettingsManager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\CrytoWatcher\CrytoWatcher\CrytoWatcher.csproj">
       <Project>{5c2bd0ad-2de4-4180-a53b-99a7c9216ce9}</Project>
       <Name>CrytoWatcher</Name>

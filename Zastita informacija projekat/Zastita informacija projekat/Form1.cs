@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AlgorithmSettingsManagerr;
 
 namespace Zastita_informacija_projekat
 {
@@ -132,7 +133,7 @@ namespace Zastita_informacija_projekat
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            using (var fswForm = new FSWFactory(mojiWatcheri))
+            using (var fswForm = new FSWFactory(mojiWatcheri, _settingsProvider))
             {
                 if (fswForm.ShowDialog(this) == DialogResult.OK)
                 {

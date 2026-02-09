@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AlgorithmSettingsManagerr;
+using PodesavanjaAlgoritama;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,18 +18,22 @@ namespace CrytoWatcher
         public CryptoAlgorithm SelectedAlgorithm { get; set; }
         public string TargetFolder { get; set; }
 
+        public ICryptoProcessor CryptoProcessor { get; set; }
+
         public event FileSystemEventHandler Created;
         public event FileSystemEventHandler Changed;
         public event FileSystemEventHandler Deleted;
         public event RenamedEventHandler Renamed;
 
-        public CryptoWatcher(string name, string path, CryptoAlgorithm algo)
+        public CryptoWatcher(string name, string path, CryptoAlgorithm algo, AlgorithmSettingsManager settingsManager)
         {
             this.Name = name;
             this.TargetFolder = path;
             this.SelectedAlgorithm = algo;
 
             this.Watcher = new FileSystemWatcher(path);
+
+            this.CryptoProcessor = new CryptoProcessor(algo, settingsManager);
 
             this.Watcher.Created += (sender, e) => Created?.Invoke(sender, e);
             this.Watcher.Changed += (sender, e) => Changed?.Invoke(sender, e);
@@ -37,5 +43,10 @@ namespace CrytoWatcher
 
         public void Start() => Watcher.EnableRaisingEvents = true;
         public void Stop() => Watcher.EnableRaisingEvents = false;
+
+        public void SetCryptoProcessor(ICryptoProcessor processor)
+        {
+            CryptoProcessor = processor;
+        }
     }
 }

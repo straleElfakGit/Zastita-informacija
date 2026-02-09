@@ -1,4 +1,5 @@
 ﻿using CrytoWatcher;
+using PodesavanjaAlgoritama;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
+using AlgorithmSettingsManagerr;
 
 namespace Zastita_informacija_projekat
 {
@@ -22,10 +24,12 @@ namespace Zastita_informacija_projekat
             ".py", ".js", ".html", ".css", ".sql",   
             ".ini", ".cfg", ".config", ".yaml", ".yml", 
             ".log", ".md", ".bat", ".sh" };
-        public FSWFactory(List<CryptoWatcher> list)
+        private AlgorithmSettingsManager _settingsManager;
+        public FSWFactory(List<CryptoWatcher> list, AlgorithmSettingsManager settingsManager)
         {
             InitializeComponent();
             _activeWatchers = list;
+            this._settingsManager = settingsManager;
             UcitajKontrole();
         }
 
@@ -56,7 +60,7 @@ namespace Zastita_informacija_projekat
         {
             using (var fbd = new FolderBrowserDialog())
             {
-                fbd.SelectedPath = @"C:\Podaci\Fakultet\Semestar_VII\Zaštita informacija\Projekat";
+                fbd.SelectedPath = @"C:\Podaci\Fakultet\Semestar_VII\Zastita_informacija\Projakat\Zastita-informacija";
 
                 fbd.Description = "Izaberite folder koji će ovaj FSW pratiti";
                 fbd.ShowNewFolderButton = true;
@@ -92,7 +96,7 @@ namespace Zastita_informacija_projekat
 
             try
             {
-                var cw = new CryptoWatcher(fswName, txtPutanja.Text, selectedAlgo);
+                var cw = new CryptoWatcher(fswName, txtPutanja.Text, selectedAlgo, _settingsManager);
 
                 cw.Watcher.IncludeSubdirectories = chkRekurzivno.Checked;
                 cw.Watcher.Filter = filter;

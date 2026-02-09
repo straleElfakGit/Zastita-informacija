@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5C2BD0AD-2DE4-4180-A53B-99A7C9216CE9}</ProjectGuid>
+    <ProjectGuid>{CF308342-63E8-41D5-AF1A-B0A6B4087D63}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CrytoWatcher</RootNamespace>
-    <AssemblyName>CrytoWatcher</AssemblyName>
+    <RootNamespace>AlgorithmSettingsManager</RootNamespace>
+    <AssemblyName>AlgorithmSettingsManager</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,44 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CryptoProcessor.cs" />
-    <Compile Include="CryptoWatcher.cs" />
-    <Compile Include="ICryptoProcessor.cs" />
-    <Compile Include="IProgressReporter.cs" />
+    <Compile Include="AlgorithmSettingsManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\AlgorithmSettingsManager\AlgorithmSettingsManager\AlgorithmSettingsManager.csproj">
-      <Project>{cf308342-63e8-41d5-af1a-b0a6b4087d63}</Project>
-      <Name>AlgorithmSettingsManager</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CFBMod\CFBMod\CFBMod.csproj">
-      <Project>{19abbb3b-1e06-4ec0-aa01-a3d6dad29cfe}</Project>
-      <Name>CFBMod</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Enigma\Enigma\Enigma.csproj">
-      <Project>{92635c1d-3f0d-4f98-bb89-3e0f07a834f0}</Project>
-      <Name>Enigma</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Hijerarhija Algoritama\Hijerarhija Algoritama\Hijerarhija Algoritama.csproj">
-      <Project>{c0be0a86-f990-44b3-9898-35d56c23505e}</Project>
-      <Name>Hijerarhija Algoritama</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\PodesavanjaAlgoritama\PodesavanjaAlgoritama\PodesavanjaAlgoritama.csproj">
       <Project>{17d0528a-9792-4083-bdc5-519bb1518612}</Project>
       <Name>PodesavanjaAlgoritama</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\TigerHash\TigerHash\TigerHash.csproj">
-      <Project>{9a641461-9c5f-400b-b50a-aea5535dc632}</Project>
-      <Name>TigerHash</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\TokoviPodataka\TokoviPodataka\TokoviPodataka.csproj">
-      <Project>{6a4b740c-3b93-40c6-b248-68af05d32a49}</Project>
-      <Name>TokoviPodataka</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\XXTEA\XXTEA\XXTEA.csproj">
-      <Project>{c97d8984-6c1f-4c31-b9c3-bccb9292b504}</Project>
-      <Name>XXTEA</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

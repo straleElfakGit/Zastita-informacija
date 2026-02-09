@@ -116,6 +116,7 @@
             this.listView3.Size = new System.Drawing.Size(668, 123);
             this.listView3.TabIndex = 4;
             this.listView3.UseCompatibleStateImageBehavior = false;
+            this.listView3.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView3_MouseDoubleClick);
             // 
             // FSWUserControl
             // 

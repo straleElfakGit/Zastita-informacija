@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PodesavanjaAlgoritama;
 
-namespace Zastita_informacija_projekat
+namespace AlgorithmSettingsManagerr
 {
     public class AlgorithmSettingsManager
     {
